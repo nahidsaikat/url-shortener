@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
-from .views import ShortenerViewSet, long_url
+from .views import ShortenerViewSet, long_url, get_count
 
 router = routers.SimpleRouter()
 router.register(r'shortener', ShortenerViewSet)

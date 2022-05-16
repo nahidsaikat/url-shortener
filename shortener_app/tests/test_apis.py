@@ -1,3 +1,5 @@
+import mock
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -25,7 +27,8 @@ class ShortenerTests(APITestCase):
         self.assertEqual(response.data.get('slug'), instance.slug)
         self.assertEqual(len(response.data.get('slug')), 7)
 
-    def test_get_long_url(self):
+    @mock.patch('shortener_app.views.put_to_dynamo')
+    def test_get_long_url(self, put_to_dynamo):
         instance = ShortenerFactory.create()
         url = reverse('long_url', args=[instance.slug])
         response = self.client.get(url)

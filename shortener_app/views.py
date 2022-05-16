@@ -20,16 +20,22 @@ class ShortenerViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 def long_url(request, slug):
     instance = Shortener.objects.get(slug=slug)
-    client = boto3.client('dynamodb', profile=settings.AWS_PROFILE)
+    put_to_dynamo(instance)
+    return Response({'url': instance.long_url})
+
+
+def put_to_dynamo(instance):
+    session = boto3.Session(profile_name=settings.AWS_PROFILE)
+    client = session.client('dynamodb')
     client.put_item(TableName=settings.AWS_DYNAMODB_TABLE_NAME, Item={
         'long_url': {'S': instance.long_url}, 'slug': {'S': instance.slug}})
-    return Response({'url': instance.long_url})
 
 
 @api_view(['GET'])
 def get_count(request, slug):
     instance = Shortener.objects.get(slug=slug)
-    client = boto3.client('dynamodb', profile=settings.AWS_PROFILE)
+    session = boto3.Session(profile_name=settings.AWS_PROFILE)
+    client = session.client('dynamodb')
     response = client.query(
         TableName=settings.AWS_DYNAMODB_TABLE_NAME,
         KeyConditionExpression='slug = :slug',

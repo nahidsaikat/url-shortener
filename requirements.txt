@@ -3,4 +3,6 @@ botocore==1.26.0
 celery==5.2.6
 Django==4.0.4
 djangorestframework==3.13.1
+factory-boy==3.2.1
+Faker==13.11.1
 python-decouple==3.6

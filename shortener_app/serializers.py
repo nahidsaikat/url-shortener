@@ -10,5 +10,6 @@ class ShortenerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_internal_value(self, data):
-        data['slug'] = create_random_code()
+        if self.context.get('request').method == 'POST':
+            data['slug'] = create_random_code()
         return data

@@ -9,4 +9,5 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path('<slug:slug>/', long_url, name='long_url'),
+    path('<slug:slug>/count/', get_count, name='get_count'),
 ]

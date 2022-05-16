@@ -139,3 +139,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MAX_URL_CHARS = config('MAX_URL_CHARS', 7)
+
+AWS_PROFILE = config('AWS_PROFILE')
+AWS_REGION = config('AWS_REGION')
+AWS_DYNAMODB_TABLE_NAME = config('AWS_DYNAMODB_TABLE_NAME')
